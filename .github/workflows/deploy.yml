@@ -1,0 +1,46 @@
+name: Deploy Backend with Frontend
+
+on:
+  push:
+    branches:
+      # - main
+      - deploy-on-google-cloud
+
+jobs:
+  deploy:
+    name: Deploy Backend with Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout backend repo
+        uses: actions/checkout@v4
+
+      - name: Download frontend build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: eclipseWebAppdist
+
+      - name: Extract frontend build artifact
+        run: tar -xzf dist.tar.gz -C dist && ls
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install backend dependencies
+        run: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Deploy to Google Cloud Run
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
+          REGION: ${{ secrets.GCP_REGION }}
+        run: |
+          gcloud auth activate-service-account --key-file="${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}"
+          gcloud config set project $PROJECT_ID
+          gcloud config set run/region $REGION
+          gcloud run deploy $SERVICE_NAME --source .
