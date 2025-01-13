@@ -1,5 +1,5 @@
-Flask<3
+Flask==3.0.3
 flask-cors==3.0.10
-gunicorn
+gunicorn==22.0.0
+Werkzeug==3.0.3
 numpy
-matplotlib

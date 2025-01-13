@@ -2,7 +2,6 @@
 
 import numpy as np
 import time
-import matplotlib.pyplot as plt
 
 def listToTuple (integer_list):
     tuple = ()
@@ -202,19 +201,6 @@ class BattleWinChances:
                     x_value += 1
                 x_value += 1
 
-            fig, ax = plt.subplots()
-            bars = ax.bar(xplacement, still_alive, color = bar_colors)
-
-            ax.set_xticks (xplacement)
-            ax.set_xticklabels (ship_names)
-            ax.set_yticks ([])
-
-            percentages = ["{:.2%}".format(p) for p in still_alive]
-
-            ax.bar_label(bars, percentages)
-            ax.set_title ("Survival chance")
-
-            plt.savefig ('battle.jpg', bbox_inches = 'tight')
             print ("win chance", self.att_win_chance, self.def_win_chance)
 
     def computeWinChance (self, ship_index) :
@@ -917,8 +903,6 @@ if __name__ == '__main__':
         test = BattleWinChances ([eridan2], [ancient]); print (test.initial_win_chance)
 
     if (npc_dam_test):
-        plt.close ()
-
         print ("NPC damage assignment tests")
 
         dum_int = Ship("int", 6, 3, 0, 0, 0, [0,0,0,0,0], [0,0,0,0,0])
@@ -955,8 +939,6 @@ if __name__ == '__main__':
         print (" ")
 
     if (missile_test):
-        plt.close ()
-
         print ("Missile test (should return 0.25)")
         int_def = Ship("int", 2, 2, 0, 0, 0, [1,0,0,0,0], [0,0,0,0,0])
         int_att = Ship("int", 1, 2, 0, 2, 0, [0,0,0,0,0], [2,0,0,0,0])
@@ -986,8 +968,6 @@ if __name__ == '__main__':
         print (" ")
 
     if (riftcan_test):
-        plt.close ()
-
         print ("One volley tests")
         cru_att = Ship("cru", 1, 2, 0, 0, 0, [0,0,0,0,1], [0,0,0,0,0])
         print ("ship with 1 pink VS uber glass canon with 0 hull (should return 33% and 50% chance of killing def ship)")
@@ -1009,7 +989,6 @@ if __name__ == '__main__':
         print (" ")
 
     if (balance_test):
-        plt.close ()
         nb = 1
         print ("balance complains tests")
         cruslow = Ship("cru",nb, 0, 6, 0, 0, [0,0,0,0,1], [0,0,0,0,0])
@@ -1043,8 +1022,6 @@ if __name__ == '__main__':
 
 
     if (perform_test):
-        plt.close ()
-
         for i in range (1, 9):
             print ("Pain test " + str(i) + ": " + str(i) + " int VS 2 sba") 
             int_att = Ship("int", i, 3, 3, 0, 0, [2,0,0,0,0], [0,0,0,0,0])
@@ -1066,6 +1043,3 @@ if __name__ == '__main__':
         #test = BattleWinChances ([int_att, cru_att], [sba_def, cru_def, dre_def]) #, sba_def])
         #toc = time.perf_counter()
         #print(f"Solved in {toc - tic:0.4f} seconds")
-
-
-    plt.show ()

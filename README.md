@@ -15,7 +15,7 @@ pip3 install -r requirements.txt
 - Run the server with:
 
 ```bash
-python3 server.py
+python3 main.py
 ```
 
-The server listens on port 5000 by default. You can access the calculator by visiting `http://localhost:5000` in your browser.
+The server listens on port 8080 by default. You can access the calculator by visiting `http://localhost:8080` in your browser.
