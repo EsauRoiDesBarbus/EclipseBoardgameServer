@@ -6,7 +6,7 @@ on:
       - master
   repository_dispatch:
     types: [frontend-build-finished]
-      
+  workflow_dispatch:
 
 jobs:
   deploy:
