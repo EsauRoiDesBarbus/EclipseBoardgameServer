@@ -1,1 +1,0 @@
-j'ai mis un readme parce qu'il paraéit que c'est bien mais je sais pas ce qu'il faut mettre dedans mdr

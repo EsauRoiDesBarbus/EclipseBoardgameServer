@@ -1,0 +1,45 @@
+name: Deploy Backend with Frontend
+
+on:
+  push:
+    branches:
+      - master
+  repository_dispatch:
+    types: [frontend-build-finished]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Backend with Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout backend repo
+        uses: actions/checkout@v4
+
+      - name: Download frontend build artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          name: eclipseWebAppdist
+          repo: EsauRoiDesBarbus/EclipseBoardgameWebApp
+          github_token: ${{ secrets.GA_READ_ACTION_TOKEN }}
+          workflow: deploy-on-main.yml
+        
+      - name: Extract frontend build artifact
+        uses: ihiroky/extract-action@v1
+        with:
+          file_path: dist.tar.gz
+
+      - name: Deploy to Google Cloud Run
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
+          REGION: ${{ secrets.GCP_REGION }}
+        run: |
+          cat <<EOF > "${{ runner.temp }}/gcp-key.json"
+          ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          EOF
+          gcloud auth activate-service-account --key-file="${{ runner.temp }}/gcp-key.json"
+          gcloud config set project $PROJECT_ID
+          gcloud config set run/region $REGION
+          gcloud run deploy $SERVICE_NAME --source .

@@ -9,7 +9,7 @@ def solveBattle (battle_info):
 
     ship_re = r"(\d+) +(int|cru|dre|sba|npc)"
     for i in range (14):
-        ship_re += " +(\d+)"
+        ship_re += r" +(\d+)"
 
     side = "ATT" # first list is attack
     for side in sides:
