@@ -1,3 +1,5 @@
 dist/
 ip.txt
 __pycache__/
+
+**.so
