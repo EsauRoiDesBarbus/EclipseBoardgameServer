@@ -1,4 +1,4 @@
-from eclipseCpp import BattleBuilder, Weapons
+from eclipseCpp import BattleBuilder
 import re
 
 def solveBattle (battle_info):
@@ -11,22 +11,23 @@ def solveBattle (battle_info):
     for i in range (14):
         ship_re += r" +(\d+)"
 
-    side = "ATT" # first list is attack
+    ship_side = "ATT" # first list is attack
     for side in sides:
         ships = side.split('+')
         for ship in ships:
+            print (ship)
             
             regex = re.search(ship_re, ship) #number type init hull comp shield weapons
+            print (regex)
             
-            canons = Weapons(int(regex[ 7]), int(regex[ 8]), int(regex[ 9]), int(regex[10]), int(regex[11]))
-            missis = Weapons(int(regex[12]), int(regex[13]), int(regex[14]), int(regex[15]), int(regex[16]))
+            canons   = [int(regex[ 7]), int(regex[ 8]), int(regex[ 9]), int(regex[10]), int(regex[11])]
+            missiles = [int(regex[12]), int(regex[13]), int(regex[14]), int(regex[15]), int(regex[16])]
 
-            battle_builder.addShip (side, int(regex[1]), regex[2], int(regex[3]), int(regex[4]), int(regex[5]), int(regex[6]), canons, missis)
+            battle_builder.addShip (ship_side, int(regex[1]), "INT", int(regex[3]), int(regex[4]), int(regex[5]), int(regex[6]), canons, missiles)
 
-        side = "DEF" #switch to def for the second list
-
-    battle_builder.solveBattle ()
-
+        ship_side = "DEF" #switch to def for the second list
+    # call C++ lib to solve battle
+    battle_builder.solveBattle (timeout=60)
     result = battle_builder.getResult ()
 
     # TODO? change frontend to take result directly
