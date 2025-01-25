@@ -36,10 +36,6 @@ jobs:
             https://github.com/EsauRoiDesBarbus/EclipseCPPBackEnd/releases/download/v1.0.0/eclipseCpp.so \
             -o eclipseCpp.so
 
-      - name: Install Boost dependencies
-        run: |
-          sudo apt-get install -y libboost-all-dev libpython3-dev
-
       - name: Deploy to Google Cloud Run
         env:
           PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
