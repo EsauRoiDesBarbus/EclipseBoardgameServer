@@ -1,5 +1,11 @@
 dist/
 ip.txt
+
+# Python
 __pycache__/
 
+# C++ builds
 **.so
+
+# MacOS
+.DS_Store
