@@ -24,7 +24,7 @@ jobs:
           repo: EsauRoiDesBarbus/EclipseBoardgameWebApp
           github_token: ${{ secrets.GA_READ_ACTION_TOKEN }}
           workflow: deploy-on-main.yml
-        
+
       - name: Extract frontend build artifact
         uses: ihiroky/extract-action@v1
         with:
@@ -33,7 +33,7 @@ jobs:
       - name: Download EclipseCpp module
         run: |
           curl -L \
-            https://github.com/EsauRoiDesBarbus/EclipseCPPBackEnd/releases/download/v1.0.0/eclipseCpp.so \
+            https://github.com/EsauRoiDesBarbus/EclipseCPPBackEnd/releases/latest/download/eclipseCpp.so \
             -o eclipseCpp.so
 
       - name: Deploy to Google Cloud Run
