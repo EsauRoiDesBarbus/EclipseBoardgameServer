@@ -4,8 +4,8 @@ ip.txt
 # Python
 __pycache__/
 
-# C++ builds
-**.so
+# C++ lib
+eclipseCpp**
 
 # MacOS
 .DS_Store
