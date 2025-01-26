@@ -30,11 +30,14 @@ jobs:
         with:
           file_path: dist.tar.gz
 
-      - name: Download EclipseCpp module
+      - name: Download EclipseCpp modules
         run: |
           curl -L \
             https://github.com/EsauRoiDesBarbus/EclipseCPPBackEnd/releases/latest/download/eclipseCpp.so \
             -o eclipseCpp.so
+          curl -L \
+            https://github.com/EsauRoiDesBarbus/EclipseCPPBackEnd/releases/latest/download/eclipseCpp_interface.py \
+            -o eclipseCpp_interface.py
 
       - name: Deploy to Google Cloud Run
         env:
